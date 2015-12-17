@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage 
+	xmlns="http://xamarin.com/schemas/2014/forms" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+	x:Class="testlistview.MyBudgetView"
+	xmlns:conv="clr-namespace:testlistview;assembly=testlistview" >
+	    <ContentPage.Resources>
+        <ResourceDictionary>
+            <conv:CurrencyColorConverter x:Key="currencyConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+		<ContentPage.Content>
+	<ListView x:Name="BudgetListView">
+		<ListView.ItemTemplate>
+			<DataTemplate>
+				<ViewCell>
+				<Grid Padding="20" >
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+					</Grid.RowDefinitions>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="120" />
+					</Grid.ColumnDefinitions>
+
+					<Label Text="{Binding Description}" Grid.Row="0" Grid.Column="0" />
+					<Label Text="{Binding Amount, StringFormat='{0:C}'}" TextColor="{Binding Amount, Converter={StaticResource currencyConverter}}"  Grid.Row="1" Grid.Column="0" />
+					<Label Text="{Binding PayDate, StringFormat='{0:d}'}" Grid.Row="2" Grid.Column="0" />
+					<Label Text="{Binding RunningTotal, StringFormat='{0:C}' }" Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" YAlign="Center" XAlign="End" />
+				</Grid>
+				</ViewCell>
+			</DataTemplate>
+		</ListView.ItemTemplate>
+	</ListView>
+	</ContentPage.Content>
+</ContentPage>
