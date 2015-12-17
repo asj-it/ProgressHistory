@@ -55,19 +55,6 @@ namespace DrawShape.iOS
 
             currentContext.SetStrokeColor (Element.StrokeColor.ToCGColor ());
             HandleStandardDraw(currentContext, rect, () => currentContext.AddArc(centerX, centerY, radius, QuarterTurnCounterClockwise, (endAngle * (Element.IndicatorPercentage)) + QuarterTurnCounterClockwise, false));
- 
-            string dateString;
-
-            var startOfWeek = DateTime.Today.AddDays( ((int)DateTime.Today.DayOfWeek) * -1 );
-
-            if (startOfWeek < Element.StepDate)
-            {
-                dateString = Element.StepDate.ToString("ddd");
-            }
-            else
-            {
-                dateString = Element.StepDate.ToString("MMM dd");
-            }
         
             if (dateLayer == null)
             {
@@ -96,7 +83,6 @@ namespace DrawShape.iOS
                 Layer.AddSublayer(percentLayer);
             }
 
-
             if (stepLayer == null)
             {
                 stepLayer = new CATextLayer
@@ -110,7 +96,7 @@ namespace DrawShape.iOS
                 Layer.AddSublayer(stepLayer);
             }
 
-            dateLayer.String = dateString;
+            dateLayer.String = Element.DateString;
             percentLayer.String = string.Format("{0:p0}", Element.IndicatorPercentage);
             stepLayer.String = String.Format("{0:##,###}", Element.Steps);
         }

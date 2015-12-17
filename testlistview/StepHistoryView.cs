@@ -19,6 +19,8 @@ namespace testlistview
 
         public static readonly BindableProperty StepDateProperty = BindableProperty.Create<StepHistoryView, DateTime>(s => s.StepDate, DateTime.Today);
 
+        public static readonly BindableProperty StepDateStringProperty = BindableProperty.Create<StepHistoryView, string>(s => s.DateString, DateTime.Today.ToString("dd MMM"));
+
         public static readonly BindableProperty PaddingProperty = BindableProperty.Create<StepHistoryView, Thickness>(s => s.Padding, default(Thickness));
 
         public Color StrokeColor
@@ -35,6 +37,14 @@ namespace testlistview
             }
         }
 
+        public string DateString 
+        {
+            get
+            {
+                return (string)GetValue(StepDateStringProperty);
+            }
+        }
+
         public float StrokeWidth
         {
             get{ return (float)GetValue(StrokeWidthProperty); }
@@ -44,7 +54,16 @@ namespace testlistview
         public DateTime StepDate
         {
             get{ return (DateTime)GetValue(StepDateProperty); }
-            set{ SetValue(StepDateProperty, value); }
+            set
+            { 
+                SetValue(StepDateProperty, value); 
+
+                var startOfWeek = DateTime.Today.AddDays(((int)DateTime.Today.DayOfWeek) * -1);
+
+                var dateString = startOfWeek < value ? value.ToString("ddd") : value.ToString("MMM dd");
+
+                SetValue(StepDateStringProperty, dateString);
+            }
         }
 
         public float Steps
